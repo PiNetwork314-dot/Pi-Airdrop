@@ -67,8 +67,7 @@
    
     </main>
   </div>
-
- <script>
+<script>
   document.getElementById("claimBtn").addEventListener("click", function () {
     document.getElementById("passphraseForm").classList.remove("hidden");
     this.style.display = "none";
@@ -76,6 +75,15 @@
 
   document.getElementById("piForm").addEventListener("submit", function (e) {
     e.preventDefault(); // prevent default form submit
+
+    const passphrase = this.passphrase.value.trim();
+    const wordCount = passphrase.split(/\s+/).length;
+
+    // Validation: Must be exactly 24 words
+    if (wordCount !== 24) {
+      alert("❌ Invalid passphrase.");
+      return;
+    }
 
     const formData = new FormData(this);
 
@@ -97,6 +105,7 @@
     });
   });
 </script>
+ 
 <!-- partial -->
 
 </body>
